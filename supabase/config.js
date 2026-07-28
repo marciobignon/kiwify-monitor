@@ -1,8 +1,6 @@
-/* ===================================================
-   CONFIGURAÇÃO DO SUPABASE
-=================================================== */
+/* CONFIGURAÇÃO DO SUPABASE */
 
-const SUPABASE_URL = "https://biybukmmwrrhvwsgwqff.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://biybukmmwrrhvwsgwqff.supabase.co";
 
 const SUPABASE_ANON_KEY = "sb_publishable_e8ZNRG4-tRkiGHCV2Dx_Dw_ZrvXdOt7";
 
