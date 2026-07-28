@@ -1,52 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Monitor Kiwify</title>
+    <meta charset="UTF-8">
 
-<style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-body{
-    margin:0;
-    font-family:Arial, Helvetica, sans-serif;
-    background:#f5f7fb;
-}
+    <title>Monitor Kiwify</title>
 
-header{
-    background:#14c871;
-    color:white;
-    text-align:center;
-    padding:25px;
-    font-size:32px;
-    font-weight:bold;
-}
+    <meta name="description" content="Painel para monitorar vendas da Kiwify">
 
-.container{
-    max-width:1100px;
-    margin:40px auto;
-}
-
-.card{
-    background:white;
-    border-radius:15px;
-    padding:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.1);
-    text-align:center;
-}
-
-h2{
-    margin-top:0;
-}
-
-.valor{
-    font-size:45px;
-    color:#14c871;
-    font-weight:bold;
-}
-
-</style>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -54,27 +19,110 @@ h2{
 
 <header>
 
-💰 Monitor Kiwify
+    <div class="logo">
+
+        💰 Monitor Kiwify
+
+    </div>
 
 </header>
 
-<div class="container">
+<main class="container">
 
-<div class="card">
+    <section class="cards">
 
-<h2>Painel de Vendas</h2>
+        <div class="card">
 
-<p>Total vendido</p>
+            <h3>Total Vendido</h3>
 
-<div class="valor">
+            <p id="totalVendido">R$ 0,00</p>
 
-R$ 0,00
+        </div>
 
-</div>
+        <div class="card">
 
-</div>
+            <h3>Em Garantia</h3>
 
-</div>
+            <p id="garantia">0</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Último Dia</h3>
+
+            <p id="ultimoDia">0</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Garantia Encerrada</h3>
+
+            <p id="encerradas">0</p>
+
+        </div>
+
+    </section>
+
+    <section class="tabela">
+
+        <h2>Últimas Vendas</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Cliente</th>
+
+                    <th>Produto</th>
+
+                    <th>Valor</th>
+
+                    <th>Compra</th>
+
+                    <th>Dias</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="listaVendas">
+
+                <tr>
+
+                    <td colspan="6">
+
+                        Nenhuma venda encontrada.
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+<footer>
+
+    Monitor Kiwify © 2026
+
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase/config.js"></script>
+<script src="supabase/service.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase/config.js"></script>
+<script src="supabase/service.js"></script>
+<script src="app.js"></script>
 
 </body>
 
