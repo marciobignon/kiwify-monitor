@@ -1,0 +1,24 @@
+{
+  "name": "kiwify-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marciobignon/kiwify-monitor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/marciobignon/kiwify-monitor/issues"
+  },
+  "homepage": "https://github.com/marciobignon/kiwify-monitor#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.111.0"
+  }
+}
