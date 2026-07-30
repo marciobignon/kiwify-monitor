@@ -89,10 +89,24 @@ function iniciarSistema(){
 }
 
 iniciarSistema();
-buscarVendas().then(vendas => {
+async function testarSupabase() {
 
-    console.log("Vendas encontradas:");
+    try {
 
-    console.table(vendas);
+        const vendas = await buscarVendas();
 
-});
+        console.log("📦 Vendas encontradas:");
+
+        console.table(vendas);
+
+        console.log("Quantidade:", vendas.length);
+
+    } catch (erro) {
+
+        console.error("Erro:", erro);
+
+    }
+
+}
+
+testarSupabase();
