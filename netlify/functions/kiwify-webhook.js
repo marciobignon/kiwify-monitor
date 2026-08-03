@@ -8,6 +8,7 @@ const supabase = createClient(
 exports.handler = async (event) => {
 
   try {
+    console.log("########## VERSÃO NOVA ##########");
 
     console.log("==================================");
     console.log("WEBHOOK RECEBIDO DA KIWIFY");
