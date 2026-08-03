@@ -8,24 +8,60 @@ const supabase = createClient(
 exports.handler = async (event) => {
 
   try {
-    console.log("########## VERSÃO NOVA ##########");
 
-    console.log("==================================");
-    console.log("WEBHOOK RECEBIDO DA KIWIFY");
-    console.log("==================================");
+    console.log("======================================");
+    console.log("WEBHOOK KIWIFY INICIADO");
+    console.log("======================================");
+
+    // Aceita apenas POST
+    if (event.httpMethod !== "POST") {
+      return {
+        statusCode: 405,
+        body: JSON.stringify({
+          success: false,
+          erro: "Método não permitido."
+        })
+      };
+    }
+
+    // Verifica se existe body
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          success: false,
+          erro: "Requisição sem body."
+        })
+      };
+    }
 
     const dados = JSON.parse(event.body);
 
     console.log("Venda:", dados.order_ref);
-    console.log("Cliente:", dados.Customer.full_name);
-    console.log("Produto:", dados.Product.product_name);
+    console.log("Cliente:", dados.Customer?.full_name);
+    console.log("Produto:", dados.Product?.product_name);
 
-    // Verifica se a venda já existe
-    const { data: vendaExistente } = await supabase
+    // Procura venda existente
+    const { data: vendaExistente, error: erroBusca } = await supabase
       .from("vendas")
       .select("kiwify_sale_id")
       .eq("kiwify_sale_id", dados.order_ref)
       .maybeSingle();
+
+    if (erroBusca) {
+
+      console.error("ERRO CONSULTANDO SUPABASE");
+      console.error(JSON.stringify(erroBusca, null, 2));
+
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          success: false,
+          erro: erroBusca.message
+        })
+      };
+
+    }
 
     if (vendaExistente) {
 
@@ -40,16 +76,23 @@ exports.handler = async (event) => {
       };
 
     }
-        // Grava a venda no Supabase
+
+    const valor =
+      (dados.Commissions?.charge_amount || 0) / 100;
+
     const { error } = await supabase
       .from("vendas")
       .insert([
         {
-          nome_cliente: dados.Customer.full_name,
-          email_cliente: dados.Customer.email,
-          produto: dados.Product.product_name,
+          kiwify_sale_id: dados.order_ref,
 
-          valentia: dados.Commissions.charge_amount / 100,
+          nome_cliente: dados.Customer?.full_name,
+
+          email_cliente: dados.Customer?.email,
+
+          produto: dados.Product?.product_name,
+
+          valentia: valor,
 
           data_compra: dados.approved_date,
 
@@ -59,17 +102,15 @@ exports.handler = async (event) => {
 
           status_garantia: "Em garantia",
 
-          criado_em: new Date().toISOString(),
-
-          kiwify_sale_id: dados.order_ref
+          criado_em: new Date().toISOString()
         }
       ]);
 
     if (error) {
 
-     console.error("========== ERRO SUPABASE ==========");
-console.error(JSON.stringify(error, null, 2));
-console.error("===================================");
+      console.error("========== ERRO SUPABASE ==========");
+      console.error(JSON.stringify(error, null, 2));
+      console.error("===================================");
 
       return {
         statusCode: 500,
@@ -81,19 +122,22 @@ console.error("===================================");
 
     }
 
-    console.log("Venda gravada com sucesso!");
-        return {
+    console.log("======================================");
+    console.log("VENDA GRAVADA COM SUCESSO");
+    console.log("======================================");
+
+    return {
       statusCode: 200,
       body: JSON.stringify({
-        success: true,
-        mensagem: "Venda gravada com sucesso."
+        success: true
       })
     };
 
   } catch (erro) {
 
-    console.error("ERRO NO WEBHOOK:");
+    console.error("========== ERRO GERAL ==========");
     console.error(erro);
+    console.error("================================");
 
     return {
       statusCode: 500,
