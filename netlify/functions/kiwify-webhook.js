@@ -67,8 +67,9 @@ exports.handler = async (event) => {
 
     if (error) {
 
-      console.error("Erro ao gravar venda:");
-      console.error(error);
+     console.error("========== ERRO SUPABASE ==========");
+console.error(JSON.stringify(error, null, 2));
+console.error("===================================");
 
       return {
         statusCode: 500,
