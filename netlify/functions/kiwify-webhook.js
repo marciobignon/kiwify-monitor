@@ -15,10 +15,10 @@ exports.handler = async () => {
     .limit(1);
 
   console.log("DATA:");
-  console.log(data);
+  console.log(JSON.stringify(data));
 
   console.log("ERROR:");
-  console.log(error);
+  console.log(JSON.stringify(error));
 
   return {
     statusCode: 200,
