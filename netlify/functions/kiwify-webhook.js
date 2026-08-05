@@ -7,12 +7,25 @@ const supabase = createClient(
 
 exports.handler = async () => {
 
-  console.log("TESTANDO CONEXÃO COM SUPABASE");
+  console.log("TESTANDO INSERT");
 
   const { data, error } = await supabase
     .from("vendas")
-    .select("*")
-    .limit(1);
+    .insert([
+      {
+        nome_cliente: "Teste",
+        email_cliente: "teste@teste.com",
+        produto: "Produto Teste",
+        valentia: 87,
+        data_compra: new Date().toISOString(),
+        status_pagamento: "paid",
+        dias_garantia: 7,
+        status_garantia: "Em garantia",
+        kiwify_sale_id: "TESTE123",
+        criado_em: new Date().toISOString()
+      }
+    ])
+    .select();
 
   console.log("DATA:");
   console.log(JSON.stringify(data));
