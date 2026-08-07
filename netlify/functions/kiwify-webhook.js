@@ -9,7 +9,7 @@ exports.handler = async () => {
 
   console.log("TESTANDO INSERT");
 
-  const { data, error } = await supabase
+  const resultado = await supabase
     .from("vendas")
     .insert([
       {
@@ -27,17 +27,11 @@ exports.handler = async () => {
     ])
     .select();
 
-  console.log("DATA:");
-  console.log(JSON.stringify(data));
-
-  console.log("ERROR:");
-  console.log(JSON.stringify(error));
+  console.log(JSON.stringify(resultado, null, 2));
 
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      sucesso: true
-    })
+    body: JSON.stringify(resultado)
   };
 
 };
